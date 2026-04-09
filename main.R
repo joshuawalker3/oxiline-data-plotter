@@ -54,3 +54,13 @@ clean_oxiline_data <- raw_oxiline_data |>
   arrange(Metric)
 
 
+# Plot Data ---------------------------------------------------------------
+
+clean_oxiline_data |>
+  ggplot(aes(x = Time, y = Value)) +
+  geom_line(color = "steelblue", linewidth = 1) +
+  geom_point(color = "black") +
+  geom_smooth(method = "lm", color = "red", linetype = "dashed", se = TRUE) +
+  facet_wrap(~Metric, scales = "free_y", ncol = 3)
+
+
