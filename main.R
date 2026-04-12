@@ -4,7 +4,7 @@
 if (!require("pacman"))
   install.packages("pacman")
 
-pacman::p_load(tidyverse)
+pacman::p_load(slider, tidyverse)
 
 
 # Constants ---------------------------------------------------------------
@@ -58,18 +58,9 @@ clean_oxiline_data <- raw_oxiline_data |>
 
 weights_only_oxiline_data <- clean_oxiline_data |>
   filter(Metric == "Weight (lb)") |>
-  arrange(desc(Time)) |>
-  mutate(week_id = (row_number() - 1) %/% 7) |>
-  group_by(week_id) |>
-  summarize(
-    avg_weight_lb = mean(Value, na.rm = TRUE),
-    start_date = min(Time),
-    end_date = max(Time),
-    entries = n()
-  )
+  arrange(Time) |>
+  mutate(running_avg = slide_dbl(Value, mean, .before = 6, .complete = FALSE))
 
-weights_only_oxiline_data <- weights_only_oxiline_data |>
-  arrange(desc(week_id))
 
 # Plot Data ---------------------------------------------------------------
 
@@ -81,8 +72,7 @@ clean_oxiline_data |>
   facet_wrap(~Metric, scales = "free_y", ncol = 3)
 
 weights_only_oxiline_data |>
-  ggplot(aes(x = week_id, y = avg_weight_lb)) +
+  ggplot(aes(x = Time, y = running_avg)) +
   geom_line(color = "steelblue", linewidth = 1) +
   geom_point(color = "black") +
-  geom_smooth(method = "lm", color = "red", linetype = "dashed", se = FALSE) +
-  scale_x_reverse(breaks = weights_only_oxiline_data$week_id)
+  geom_smooth(method = "lm", color = "red", linetype = "dashed", se = FALSE)
