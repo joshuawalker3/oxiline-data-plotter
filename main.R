@@ -66,13 +66,13 @@ weights_only_oxiline_data <- clean_oxiline_data |>
 
 clean_oxiline_data |>
   ggplot(aes(x = Time, y = Value)) +
-  geom_line(color = "steelblue", linewidth = 1) +
-  geom_point(color = "black") +
-  geom_smooth(method = "lm", color = "red", linetype = "dashed", se = TRUE) +
+  geom_line(color = "grey30", linewidth = 0.8) +
+  geom_point(color = "black", size = 1, alpha = 0.6) +
+  geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
   facet_wrap(~Metric, scales = "free_y", ncol = 3)
 
 weights_only_oxiline_data |>
   ggplot(aes(x = Time, y = running_avg)) +
-  geom_line(color = "steelblue", linewidth = 1) +
-  geom_point(color = "black") +
-  geom_smooth(method = "lm", color = "red", linetype = "dashed", se = FALSE)
+  geom_line(color = "grey30", linewidth = 0.8) +
+  geom_point(color = "black", size = 1) +
+  geom_smooth(method = "lm", color = "#e69F00", linetype = "dashed", se = TRUE)
