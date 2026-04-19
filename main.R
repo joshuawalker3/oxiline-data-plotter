@@ -4,7 +4,7 @@
 if (!require("pacman"))
   install.packages("pacman")
 
-pacman::p_load(slider, tidyverse)
+pacman::p_load(ggpubr, slider, tidyverse)
 
 
 # Constants ---------------------------------------------------------------
@@ -67,7 +67,7 @@ weights_only_oxiline_data <- clean_oxiline_data |>
 clean_oxiline_data |>
   ggplot(aes(x = Time, y = Value)) +
   geom_line(color = "grey30", linewidth = 0.8) +
-  geom_point(color = "black", size = 1, alpha = 0.6) +
+  geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
   facet_wrap(~Metric, scales = "free_y", ncol = 3)
 
@@ -75,4 +75,5 @@ weights_only_oxiline_data |>
   ggplot(aes(x = Time, y = running_avg)) +
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
-  geom_smooth(method = "lm", color = "#e69F00", linetype = "dashed", se = TRUE)
+  geom_smooth(method = "lm", color = "#e69F00", linetype = "dashed", se = TRUE) +
+  stat_regline_equation(label.y = max(weights_only_oxiline_data$running_avg + 0.1, na.rm = FALSE))
