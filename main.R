@@ -9,7 +9,7 @@ pacman::p_load(ggpubr, slider, tidyverse)
 
 # Constants ---------------------------------------------------------------
 
-metrics_filter <- c(
+oxiline_metrics_filter <- c(
   "BMI",
   "Basal Metabolic Rate",
   "Bone Mass",
@@ -38,6 +38,20 @@ metrics_filter <- c(
   "Waist-Hip Ratio",
   "Weight (kg)"
 )
+
+neck_waist_filter <- c("Neck", "Waist")
+
+waist_hips_filter <- c("Waist", "Hips")
+
+chest_filter <-  c("Chest")
+
+arms_filter <- c("Arm Left", "Arm Right")
+
+thigh_filter <- c("Thigh Left", "Thigh Right")
+
+calf_filter <- c("Calf Left", "Calf Right")
+  
+  
 # Read in Data ------------------------------------------------------------
 
 message(paste0("\nSelect Oxiline Data CSV......"))
@@ -54,7 +68,7 @@ raw_body_measurement_data <- read.csv(body_file_path)
 clean_oxiline_data <- raw_oxiline_data |>
   select(Metric, Value, Time) |>
   mutate(Time = as.Date(Time)) |>
-  filter(!(Metric %in% metrics_filter)) |>
+  filter(!(Metric %in% oxiline_metrics_filter)) |>
   arrange(Metric)
 
 clean_body_measurement_data <- raw_body_measurement_data |>
@@ -70,9 +84,37 @@ weights_only_oxiline_data <- clean_oxiline_data |>
   mutate(running_avg = slide_dbl(Value, mean, .before = 6, .complete = FALSE))
 
 
+# Isolate Body Measurements -----------------------------------------------
+
+neck_waist_measurements <- clean_body_measurement_data |>
+  filter(Metric %in% neck_waist_filter)
+
+waist_hips_measurements <- clean_body_measurement_data |>
+  filter(Metric %in% waist_hips_filter)
+
+chest_measurement <- clean_body_measurement_data |>
+  filter(Metric %in% chest_filter)
+
+arms_measurements <- clean_body_measurement_data |>
+  filter(Metric %in% c("Arm Left", "Arm Right"))
+
+thigh_measurements <- clean_body_measurement_data |>
+  filter(Metric %in% c("Thigh Left", "Thigh Right"))
+
+calf_measurements <- clean_body_measurement_data |>
+  filter(Metric %in% c("Calf Left", "Calf Right"))
+
+
 # Plot Data ---------------------------------------------------------------
 
 clean_oxiline_data |>
+  ggplot(aes(x = Time, y = Value)) +
+  geom_line(color = "grey30", linewidth = 0.8) +
+  geom_point(color = "black", size = 1) +
+  geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
+  facet_wrap(~Metric, scales = "free_y", ncol = 3)
+
+clean_body_measurement_data |>
   ggplot(aes(x = Time, y = Value)) +
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
