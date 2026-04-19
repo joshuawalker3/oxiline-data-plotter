@@ -41,8 +41,12 @@ metrics_filter <- c(
 # Read in Data ------------------------------------------------------------
 
 message(paste0("\nSelect Oxiline Data CSV......"))
-file_path <- file.choose()
-raw_oxiline_data <- read.csv(file_path)
+oxiline_file_path <- file.choose()
+raw_oxiline_data <- read.csv(oxiline_file_path)
+
+message(paste0("\nSelect Body Measurements CSV......"))
+body_file_path <- file.choose()
+raw_body_measurement_data <- read.csv(body_file_path)
 
 
 # Clean Data --------------------------------------------------------------
@@ -51,6 +55,10 @@ clean_oxiline_data <- raw_oxiline_data |>
   select(Metric, Value, Time) |>
   mutate(Time = as.Date(Time)) |>
   filter(!(Metric %in% metrics_filter)) |>
+  arrange(Metric)
+
+clean_body_measurement_data <- raw_body_measurement_data |>
+  mutate(Time = as.Date(Time)) |>
   arrange(Metric)
 
 
