@@ -39,9 +39,11 @@ oxiline_metrics_filter <- c(
   "Weight (kg)"
 )
 
-neck_waist_filter <- c("Neck", "Waist")
+neck_filter <- c("Neck")
 
-waist_hips_filter <- c("Waist", "Hips")
+waist_filter <- c("Waist")
+
+hips_filter <- c("Hips")
 
 chest_filter <-  c("Chest")
 
@@ -86,11 +88,14 @@ weights_only_oxiline_data <- clean_oxiline_data |>
 
 # Isolate Body Measurements -----------------------------------------------
 
-neck_waist_measurements <- clean_body_measurement_data |>
-  filter(Metric %in% neck_waist_filter)
+neck_measurements <- clean_body_measurement_data |>
+  filter(Metric %in% neck_filter)
 
-waist_hips_measurements <- clean_body_measurement_data |>
-  filter(Metric %in% waist_hips_filter)
+waist_measurements <- clean_body_measurement_data |>
+  filter(Metric %in% waist_filter)
+
+hips_measurements <- clean_body_measurement_data |>
+  filter(Metric %in% hips_filter)
 
 chest_measurements <- clean_body_measurement_data |>
   filter(Metric %in% chest_filter)
@@ -114,35 +119,40 @@ clean_oxiline_data |>
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
   facet_wrap(~Metric, scales = "free_y", ncol = 3)
 
-neck_waist_measurements |>
+neck_measurements |>
   ggplot(aes(x = Time, y = Value)) +
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
-  stat_regline_equation(label.y = max(neck_waist_measurements$Metric + 0.1, na.rm = TRUE)) +
-  facet_wrap(~Metric, scales = "free_y", ncol = 2)
+  stat_regline_equation(label.y = max(neck_measurements$Value + 0.1, na.rm = TRUE))
 
-waist_hips_measurements |>
+waist_measurements |>
   ggplot(aes(x = Time, y = Value)) +
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
-  stat_regline_equation(label.y = max(waist_hips_measurements$Metric + 0.1, na.rm = TRUE)) +
-  facet_wrap(~Metric, scales = "free_y", ncol = 2)
+  stat_regline_equation(label.y = max(waist_measurements$Value + 0.1, na.rm = TRUE))
+
+hips_measurements |>
+  ggplot(aes(x = Time, y = Value)) +
+  geom_line(color = "grey30", linewidth = 0.8) +
+  geom_point(color = "black", size = 1) +
+  geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
+  stat_regline_equation(label.y = max(hips_measurements$Value + 0.1, na.rm = TRUE))
 
 chest_measurements |>
   ggplot(aes(x = Time, y = Value)) +
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
-  stat_regline_equation(label.y = max(chest_measurements$Metric + 0.1, na.rm = TRUE))
+  stat_regline_equation(label.y = max(chest_measurements$Value + 0.1, na.rm = TRUE))
 
 arms_measurements |>
   ggplot(aes(x = Time, y = Value)) +
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
-  stat_regline_equation(label.y = max(arms_measurements$Metric + 0.1, na.rm = TRUE)) +
+  stat_regline_equation(label.y = max(arms_measurements$Value + 0.1, na.rm = TRUE)) +
   facet_wrap(~Metric, scales = "free_y", ncol = 2)
 
 thigh_measurements |>
@@ -150,7 +160,7 @@ thigh_measurements |>
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
-  stat_regline_equation(label.y = max(thigh_measurements$Metric + 0.1, na.rm = TRUE)) +
+  stat_regline_equation(label.y = max(thigh_measurements$Value + 0.1, na.rm = TRUE)) +
   facet_wrap(~Metric, scales = "free_y", ncol = 2)
 
 calf_measurements |>
@@ -158,7 +168,7 @@ calf_measurements |>
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
-  stat_regline_equation(label.y = max(calf_measurements$Metric + 0.1, na.rm = TRUE)) +
+  stat_regline_equation(label.y = max(calf_measurements$Value + 0.1, na.rm = TRUE)) +
   facet_wrap(~Metric, scales = "free_y", ncol = 2)
 
 weights_only_oxiline_data |>
@@ -167,3 +177,4 @@ weights_only_oxiline_data |>
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#e69F00", linetype = "dashed", se = TRUE) +
   stat_regline_equation(label.y = max(weights_only_oxiline_data$running_avg + 0.1, na.rm = TRUE))
+
