@@ -96,13 +96,13 @@ chest_measurement <- clean_body_measurement_data |>
   filter(Metric %in% chest_filter)
 
 arms_measurements <- clean_body_measurement_data |>
-  filter(Metric %in% c("Arm Left", "Arm Right"))
+  filter(Metric %in% arms_filter)
 
 thigh_measurements <- clean_body_measurement_data |>
-  filter(Metric %in% c("Thigh Left", "Thigh Right"))
+  filter(Metric %in% thigh_filter)
 
 calf_measurements <- clean_body_measurement_data |>
-  filter(Metric %in% c("Calf Left", "Calf Right"))
+  filter(Metric %in% calf_filter)
 
 
 # Plot Data ---------------------------------------------------------------
@@ -114,16 +114,50 @@ clean_oxiline_data |>
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
   facet_wrap(~Metric, scales = "free_y", ncol = 3)
 
-clean_body_measurement_data |>
+neck_waist_measurements |>
   ggplot(aes(x = Time, y = Value)) +
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
-  facet_wrap(~Metric, scales = "free_y", ncol = 3)
+  facet_wrap(~Metric, scales = "free_y", ncol = 2)
+
+waist_hips_measurements |>
+  ggplot(aes(x = Time, y = Value)) +
+  geom_line(color = "grey30", linewidth = 0.8) +
+  geom_point(color = "black", size = 1) +
+  geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
+  facet_wrap(~Metric, scales = "free_y", ncol = 2)
+
+chest_measurement |>
+  ggplot(aes(x = Time, y = Value)) +
+  geom_line(color = "grey30", linewidth = 0.8) +
+  geom_point(color = "black", size = 1) +
+  geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE)
+
+arms_measurements |>
+  ggplot(aes(x = Time, y = Value)) +
+  geom_line(color = "grey30", linewidth = 0.8) +
+  geom_point(color = "black", size = 1) +
+  geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
+  facet_wrap(~Metric, scales = "free_y", ncol = 2)
+
+thigh_measurements |>
+  ggplot(aes(x = Time, y = Value)) +
+  geom_line(color = "grey30", linewidth = 0.8) +
+  geom_point(color = "black", size = 1) +
+  geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
+  facet_wrap(~Metric, scales = "free_y", ncol = 2)
+
+calf_measurements |>
+  ggplot(aes(x = Time, y = Value)) +
+  geom_line(color = "grey30", linewidth = 0.8) +
+  geom_point(color = "black", size = 1) +
+  geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
+  facet_wrap(~Metric, scales = "free_y", ncol = 2)
 
 weights_only_oxiline_data |>
   ggplot(aes(x = Time, y = running_avg)) +
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#e69F00", linetype = "dashed", se = TRUE) +
-  stat_regline_equation(label.y = max(weights_only_oxiline_data$running_avg + 0.1, na.rm = FALSE))
+  stat_regline_equation(label.y = max(weights_only_oxiline_data$running_avg + 0.1, na.rm = TRUE))
