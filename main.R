@@ -85,6 +85,7 @@ weights_only_oxiline_data <- clean_oxiline_data |>
   arrange(Time) |>
   mutate(
     Days = as.numeric(difftime(Time, min(Time), units = "days")),
+    Week_Num = paste0("Week ", (floor(Days / 7) + 1)),
     Running_Avg = slide_dbl(Value, mean, .before = 3, .after = 3, .complete = FALSE)
     )
 
@@ -180,3 +181,11 @@ weights_only_oxiline_data |>
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#e69F00", linetype = "dashed", se = TRUE) +
   stat_regline_equation(label.y = max(weights_only_oxiline_data$Running_Avg + 0.1, na.rm = TRUE))
+
+weights_only_oxiline_data |>
+  ggplot(aes(x = Days, y = Running_Avg, group = Week_Num, color = Week_Num)) +
+  geom_line(linewidth = 0.8) +
+  geom_point(size = 1) +
+  geom_smooth(method = "lm", linetype = "dashed", se = TRUE) +
+  stat_regline_equation(aes(label = ..eq.label..), label.x.npc = "center")
+
