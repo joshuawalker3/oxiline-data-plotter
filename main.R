@@ -83,7 +83,10 @@ clean_body_measurement_data <- raw_body_measurement_data |>
 weights_only_oxiline_data <- clean_oxiline_data |>
   filter(Metric == "Weight (lb)") |>
   arrange(Time) |>
-  mutate(running_avg = slide_dbl(Value, mean, .before = 3, .after = 3, .complete = FALSE))
+  mutate(
+    Days = as.numeric(difftime(Time, min(Time), units = "days")),
+    Running_Avg = slide_dbl(Value, mean, .before = 3, .after = 3, .complete = FALSE)
+    )
 
 
 # Isolate Body Measurements -----------------------------------------------
@@ -172,8 +175,8 @@ calf_measurements |>
   facet_wrap(~Metric, scales = "free_y", ncol = 2)
 
 weights_only_oxiline_data |>
-  ggplot(aes(x = Time, y = running_avg)) +
+  ggplot(aes(x = Days, y = Running_Avg)) +
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#e69F00", linetype = "dashed", se = TRUE) +
-  stat_regline_equation(label.y = max(weights_only_oxiline_data$running_avg + 0.1, na.rm = TRUE))
+  stat_regline_equation(label.y = max(weights_only_oxiline_data$Running_Avg + 0.1, na.rm = TRUE))
