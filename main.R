@@ -121,35 +121,80 @@ clean_oxiline_data |>
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
-  facet_wrap(~Metric, scales = "free_y", ncol = 3)
+  facet_wrap(~Metric, scales = "free_y", ncol = 3) +
+  labs(
+    title = "Oxiline Measurements",
+    x = "Date",
+    y = "Oxiline Scale Measurement"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14)
+  )
 
 neck_measurements |>
   ggplot(aes(x = Time, y = Value)) +
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
-  stat_regline_equation(label.y = max(neck_measurements$Value + 0.1, na.rm = TRUE))
+  stat_regline_equation(label.y = max(neck_measurements$Value + 0.1, na.rm = TRUE)) +
+  labs(
+    title = "Neck Circumference",
+    x = "Date",
+    y = "Circumference (Inches)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14)
+  )
 
 waist_measurements |>
   ggplot(aes(x = Time, y = Value)) +
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
-  stat_regline_equation(label.y = max(waist_measurements$Value + 0.1, na.rm = TRUE))
+  stat_regline_equation(label.y = max(waist_measurements$Value + 0.1, na.rm = TRUE)) +
+  labs(
+    title = "Waist Circumference",
+    x = "Date",
+    y = "Circumference (Inches)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14)
+  )
 
 hips_measurements |>
   ggplot(aes(x = Time, y = Value)) +
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
-  stat_regline_equation(label.y = max(hips_measurements$Value + 0.1, na.rm = TRUE))
+  stat_regline_equation(label.y = max(hips_measurements$Value + 0.1, na.rm = TRUE)) +
+  labs(
+    title = "Hips Circumference",
+    x = "Date",
+    y = "Circumference (Inches)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14)
+  )
 
 chest_measurements |>
   ggplot(aes(x = Time, y = Value)) +
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
-  stat_regline_equation(label.y = max(chest_measurements$Value + 0.1, na.rm = TRUE))
+  stat_regline_equation(label.y = max(chest_measurements$Value + 0.1, na.rm = TRUE)) +
+  labs(
+    title = "Chest Circumference",
+    x = "Date",
+    y = "Circumference (Inches)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14)
+  )
 
 arms_measurements |>
   ggplot(aes(x = Time, y = Value)) +
@@ -157,7 +202,16 @@ arms_measurements |>
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
   stat_regline_equation(label.y = max(arms_measurements$Value + 0.1, na.rm = TRUE)) +
-  facet_wrap(~Metric, scales = "free_y", ncol = 2)
+  facet_wrap(~Metric, scales = "free_y", ncol = 2) +
+  labs(
+    title = "Bicep Circumference",
+    x = "Date",
+    y = "Circumference (Inches)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14)
+  )
 
 thigh_measurements |>
   ggplot(aes(x = Time, y = Value)) +
@@ -165,7 +219,16 @@ thigh_measurements |>
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
   stat_regline_equation(label.y = max(thigh_measurements$Value + 0.1, na.rm = TRUE)) +
-  facet_wrap(~Metric, scales = "free_y", ncol = 2)
+  facet_wrap(~Metric, scales = "free_y", ncol = 2) +
+  labs(
+    title = "Thigh Circumference",
+    x = "Date",
+    y = "Circumference (Inches)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14)
+  )
 
 calf_measurements |>
   ggplot(aes(x = Time, y = Value)) +
@@ -173,19 +236,46 @@ calf_measurements |>
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#E69F00", linetype = "dashed", se = TRUE) +
   stat_regline_equation(label.y = max(calf_measurements$Value + 0.1, na.rm = TRUE)) +
-  facet_wrap(~Metric, scales = "free_y", ncol = 2)
+  facet_wrap(~Metric, scales = "free_y", ncol = 2) +
+  labs(
+    title = "Calf Circumference",
+    x = "Date",
+    y = "Circumference (Inches)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14)
+  )
 
 weights_only_oxiline_data |>
   ggplot(aes(x = Days, y = Running_Avg)) +
   geom_line(color = "grey30", linewidth = 0.8) +
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#e69F00", linetype = "dashed", se = TRUE) +
-  stat_regline_equation(label.y = max(weights_only_oxiline_data$Running_Avg + 0.1, na.rm = TRUE))
+  stat_regline_equation(label.y = max(weights_only_oxiline_data$Running_Avg + 0.1, na.rm = TRUE)) +
+  labs(
+    title = "Body Weight Overall Trend",
+    x = "Days Since Start (4/5/26)",
+    y = "Weight (Lbs)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14)
+  )
 
 weights_only_oxiline_data |>
   ggplot(aes(x = Days, y = Running_Avg, group = Week_Num, color = Week_Num)) +
   geom_line(linewidth = 0.8) +
   geom_point(size = 1) +
   geom_smooth(method = "lm", linetype = "dashed", se = TRUE) +
-  stat_regline_equation(aes(label = ..eq.label..), label.x.npc = "center")
+  stat_regline_equation(aes(label = ..eq.label..), label.x.npc = "center") +
+  labs(
+    title = "Body Weight Trends By Week",
+    x = "Days Since Start (4/5/26)",
+    y = "Weight (Lbs)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14)
+  )
 
