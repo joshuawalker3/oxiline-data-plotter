@@ -83,7 +83,7 @@ clean_body_measurement_data <- raw_body_measurement_data |>
 weights_only_oxiline_data <- clean_oxiline_data |>
   filter(Metric == "Weight (lb)") |>
   arrange(Time) |>
-  mutate(running_avg = slide_dbl(Value, mean, .before = 6, .complete = FALSE))
+  mutate(running_avg = slide_dbl(Value, mean, .before = 3, .after = 3, .complete = FALSE))
 
 
 # Isolate Body Measurements -----------------------------------------------
@@ -177,4 +177,3 @@ weights_only_oxiline_data |>
   geom_point(color = "black", size = 1) +
   geom_smooth(method = "lm", color = "#e69F00", linetype = "dashed", se = TRUE) +
   stat_regline_equation(label.y = max(weights_only_oxiline_data$running_avg + 0.1, na.rm = TRUE))
-
